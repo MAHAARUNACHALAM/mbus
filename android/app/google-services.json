@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1094531949370",
+    "project_id": "irctcdelivery",
+    "storage_bucket": "irctcdelivery.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1094531949370:android:c8099d933a0d9ebd89e603",
+        "android_client_info": {
+          "package_name": "com.example.irctc_delivery_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1094531949370-i0hm9rkgieqthuufrtqbm9ne781cl7no.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEqku8XIfhY7A-lX9ndwT5v8fu3U1jsvU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1094531949370-i0hm9rkgieqthuufrtqbm9ne781cl7no.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
