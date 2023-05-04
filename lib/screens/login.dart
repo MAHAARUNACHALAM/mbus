@@ -187,7 +187,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                     onPressed: () {
-                      validation();
+                      // validation();
+                      Navigator.pushNamed(context, '/superadmin');
                     },
                   ),
                 ),

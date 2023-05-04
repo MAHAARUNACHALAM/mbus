@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mbus/providers/hexColor.dart';
 
 class BottomNavCustom extends StatefulWidget {
   @override
@@ -34,12 +35,12 @@ class _BottomNavCustomState extends State<BottomNavCustom> {
     NavigationItem(
         Icon(
           Icons.search,
-          color: Color.fromRGBO(230, 169, 25, 1),
+          color: Color.fromRGBO(206, 32, 32, 1),
         ),
         Text(
           'Search',
           style: TextStyle(
-              color: Color.fromRGBO(230, 169, 25, 1),
+              color: Color.fromRGBO(206, 32, 32, 1),
               fontWeight: FontWeight.bold),
         ),
         Color.fromRGBO(251, 239, 211, 1)),
@@ -99,7 +100,7 @@ class _BottomNavCustomState extends State<BottomNavCustom> {
       height: 56,
       padding: EdgeInsets.only(left: 8, top: 4, bottom: 4, right: 8),
       decoration: BoxDecoration(
-          color: Colors.white,
+          color: hexYellow,
           boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
           shape: BoxShape.rectangle,
           //To get border radius

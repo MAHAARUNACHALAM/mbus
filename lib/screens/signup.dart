@@ -4,6 +4,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components/appbar.dart';
 import '../components/button_style.dart';
@@ -25,7 +26,6 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController password = new TextEditingController();
   final TextEditingController cnf_password = new TextEditingController();
   TextEditingController _verificationCodeController = TextEditingController();
-  var verificationId;
 
   static const snackBar = SnackBar(
     content: Text('Invalid Credentials'),
@@ -206,7 +206,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       height: 50,
                       child: TextField(
                         obscureText: true,
-                        controller: password,
+                        controller: cnf_password,
                         maxLength: 6,
                         focusNode: cnf_password_focusnode,
                         textInputAction: TextInputAction.next,
@@ -247,11 +247,12 @@ class _SignupScreenState extends State<SignupScreen> {
                           verificationCompleted:
                               (PhoneAuthCredential credential) {},
                           verificationFailed: (FirebaseAuthException e) {},
-                          codeSent: (String verificationId, int? resendToken) {
+                          codeSent:
+                              (String verificationId, int? resendToken) async {
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            prefs.setString('verificationId', verificationId);
                             // set verificationId to a variable
-                            setState(() {
-                              verificationId = verificationId;
-                            });
                           },
                           codeAutoRetrievalTimeout: (String verificationId) {},
                         );
@@ -277,11 +278,15 @@ class _SignupScreenState extends State<SignupScreen> {
                                     // Get the verification code entered by the user
                                     String verificationCode =
                                         _verificationCodeController.text.trim();
+                                    SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    var verificationId =
+                                        prefs.getString('verificationId');
 
                                     // Create a PhoneAuthCredential with the verification code
                                     PhoneAuthCredential credential =
                                         PhoneAuthProvider.credential(
-                                      verificationId: verificationId,
+                                      verificationId: verificationId!,
                                       smsCode: verificationCode,
                                     );
 
