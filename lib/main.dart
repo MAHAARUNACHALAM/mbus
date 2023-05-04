@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 import 'package:mbus/components/appbar.dart';
+import 'package:mbus/screens/client/busListScreen.dart';
+import 'package:mbus/screens/client/passengerDetails.dart';
+import 'package:mbus/screens/dashboard.dart';
 import 'package:mbus/screens/login.dart';
 import 'package:mbus/screens/prelogin.dart';
 import 'package:mbus/screens/signup.dart';
@@ -29,6 +32,9 @@ void main() async {
         '/login': (context) => LoginScreen(),
         '/prelogin': (context) => PreLogin(),
         '/superadmin': (context) => SuperAdminDashboard(),
+        '/dashboard': (context) => Dashboard(),
+        '/busList': (context) => BusListScreen(),
+        '/passenger': (context) => PassengerDetailsScreen(),
       },
     ),
   );
