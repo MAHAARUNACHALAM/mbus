@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:mbus/components/appbar.dart';
 import 'package:mbus/screens/client/busListScreen.dart';
 import 'package:mbus/screens/client/passengerDetails.dart';
+import 'package:mbus/screens/client/seatSelection.dart';
 import 'package:mbus/screens/dashboard.dart';
 import 'package:mbus/screens/login.dart';
 import 'package:mbus/screens/prelogin.dart';
@@ -14,6 +15,7 @@ import 'package:mbus/screens/superadminDashboard.dart';
 import 'config/app_config.dart';
 import 'firebase_options.dart';
 import 'providers/hexColor.dart';
+import 'screens/admin/admindashboard.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +36,9 @@ void main() async {
         '/superadmin': (context) => SuperAdminDashboard(),
         '/dashboard': (context) => Dashboard(),
         '/busList': (context) => BusListScreen(),
+        '/seatSelection': (context) => SeatSelectionScreen(),
         '/passenger': (context) => PassengerDetailsScreen(),
+        '/admin': (context) => AdminDashboard(),
       },
     ),
   );
