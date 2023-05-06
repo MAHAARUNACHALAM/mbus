@@ -11,11 +11,11 @@ import 'package:mbus/screens/login.dart';
 import 'package:mbus/screens/prelogin.dart';
 import 'package:mbus/screens/signup.dart';
 import 'package:mbus/screens/splashscreen.dart';
-import 'package:mbus/screens/superadminDashboard.dart';
 import 'config/app_config.dart';
 import 'firebase_options.dart';
 import 'providers/hexColor.dart';
 import 'screens/admin/admindashboard.dart';
+import 'screens/superAdmin/superAdminDashboard.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,12 +33,12 @@ void main() async {
         '/signup': (context) => SignupScreen(),
         '/login': (context) => LoginScreen(),
         '/prelogin': (context) => PreLogin(),
-        '/superadmin': (context) => SuperAdminDashboard(),
         '/dashboard': (context) => Dashboard(),
         '/busList': (context) => BusListScreen(),
         '/seatSelection': (context) => SeatSelectionScreen(),
         '/passenger': (context) => PassengerDetailsScreen(),
         '/admin': (context) => AdminDashboard(),
+        '/superadmin': (context) => SuperAdminDashboard(),
       },
     ),
   );

@@ -188,7 +188,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     onPressed: () {
                       // validation();
-                      Navigator.pushNamed(context, '/admin');
+                      Navigator.pushNamed(context, '/superadmin');
                     },
                   ),
                 ),
