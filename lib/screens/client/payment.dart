@@ -1,6 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:mbus/components/appbar.dart';
+import 'package:mbus/config/app_config.dart';
 import 'package:mbus/providers/hexColor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PaymentScreen extends StatelessWidget {
   final String name;
@@ -18,6 +21,7 @@ class PaymentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var config = AppConfig.of(context);
     return Scaffold(
       appBar: BaseAppBar(),
       body: Padding(
@@ -135,8 +139,30 @@ class PaymentScreen extends StatelessWidget {
             ),
             SizedBox(height: 20.0),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 // Handle payment here
+                //get source,destination,date,id,busId from shared preferences
+                var prefs = await SharedPreferences.getInstance();
+                var source = prefs.getString('source');
+                var destination = prefs.getString('destination');
+                var date = prefs.getString('date');
+                var id = prefs.getString('Id');
+                var busId = prefs.getString('referenceId');
+                //print data
+
+                //send data to server
+                var response = await Dio()
+                    .post(config!.apiBaseUrl + 'api/Bus/bookTicket', data: {
+                  'source': source,
+                  'destination': destination,
+                  'date': date,
+                  'price': int.parse(amount),
+                  'id': id,
+                  'busId': busId
+                });
+                print(response.data);
+                //push to success screen
+                Navigator.pushNamed(context, '/success');
               },
               style: ElevatedButton.styleFrom(
                 primary: hexYellow,

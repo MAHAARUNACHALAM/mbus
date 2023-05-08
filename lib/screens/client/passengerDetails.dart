@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mbus/components/appbar.dart';
 import 'package:mbus/components/button_style.dart';
 import 'package:mbus/screens/client/payment.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PassengerDetailsScreen extends StatefulWidget {
   const PassengerDetailsScreen({Key? key}) : super(key: key);
@@ -88,7 +89,11 @@ class _PassengerDetailsScreenState extends State<PassengerDetailsScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      //get price from shared preferences
+                      var prefs = await SharedPreferences.getInstance();
+                      var price = prefs.getString('price');
+
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
                         Navigator.push(
@@ -98,7 +103,7 @@ class _PassengerDetailsScreenState extends State<PassengerDetailsScreen> {
                               name: _name!,
                               email: _email!,
                               phone: _phone!,
-                              amount: '500',
+                              amount: price!,
                             ),
                           ),
                         );

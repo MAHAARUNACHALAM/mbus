@@ -59,6 +59,10 @@ class _BusListScreenState extends State<BusListScreen> {
                   SharedPreferences prefs =
                       await SharedPreferences.getInstance();
                   prefs.setString('referenceId', bus.referenceId);
+                  prefs.setString('source', bus.source);
+                  prefs.setString('destination', bus.destination);
+                  prefs.setString('date', bus.departure);
+                  prefs.setString('price', bus.price.toString());
                   Navigator.pushNamed(context, '/passenger');
                 },
                 style: ElevatedButton.styleFrom(

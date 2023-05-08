@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:mbus/components/appbar.dart';
 import 'package:mbus/screens/client/busListScreen.dart';
 import 'package:mbus/screens/client/passengerDetails.dart';
+import 'package:mbus/screens/client/paymentSuccess.dart';
 import 'package:mbus/screens/client/seatSelection.dart';
 import 'package:mbus/screens/dashboard.dart';
 import 'package:mbus/screens/login.dart';
@@ -38,6 +39,7 @@ void main() async {
         '/passenger': (context) => PassengerDetailsScreen(),
         '/admin': (context) => AdminDashboard(),
         '/superadmin': (context) => SuperAdminDashboard(),
+        '/success': (context) => PaymentSuccessPage()
       },
     ),
   );
