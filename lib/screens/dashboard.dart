@@ -115,7 +115,7 @@ class DashboardState extends State<Dashboard> {
         return new Home();
         break;
       case 1:
-        return new MyBooking();
+        return new MyBookingScreen();
         break;
       case 2:
         return new Help();
