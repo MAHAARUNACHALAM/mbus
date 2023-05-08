@@ -25,7 +25,7 @@ void main() async {
   var configuredApp = AppConfig(
     appName: 'mBus',
     flavorName: 'dev',
-    apiBaseUrl: 'http://192.168.73.49:5226/',
+    apiBaseUrl: 'http://192.168.37.49:5051/',
     child: MaterialApp(
       home: Splashscreen(),
       initialRoute: '/',
@@ -34,7 +34,6 @@ void main() async {
         '/login': (context) => LoginScreen(),
         '/prelogin': (context) => PreLogin(),
         '/dashboard': (context) => Dashboard(),
-        '/busList': (context) => BusListScreen(),
         '/seatSelection': (context) => SeatSelectionScreen(),
         '/passenger': (context) => PassengerDetailsScreen(),
         '/admin': (context) => AdminDashboard(),

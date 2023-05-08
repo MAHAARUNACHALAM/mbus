@@ -1,9 +1,12 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mbus/components/appbar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components/bottombar.dart';
 import '../components/button_style.dart';
+import '../config/app_config.dart';
 import '../providers/responsive.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -77,6 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     double value = ResponsiveWidget.isSmallScreen(context) ? 10 : 50;
+    var config = AppConfig.of(context);
     return Scaffold(
       appBar: BaseAppBar(),
       // bottomNavigationBar: BottomNavCustom(),
@@ -186,9 +190,46 @@ class _LoginScreenState extends State<LoginScreen> {
                       'Login',
                       style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
-                    onPressed: () {
-                      // validation();
-                      Navigator.pushNamed(context, '/superadmin');
+                    onPressed: () async {
+                      validation();
+                      //dio login post request
+
+                      var response = await Dio()
+                          .post(config!.apiBaseUrl + 'api/User/login', data: {
+                        'phonenumber': email.text,
+                        'password': password.text
+                      });
+                      print(response.data);
+                      if (response.data['status'] == 1) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text("Login Successfull"),
+                        ));
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        prefs.setString('Id', response.data['id'].toString());
+                        prefs.setString('token', response.data['token']);
+                        prefs.setString(
+                            'roleid', response.data['roleid'].toString());
+                        if (response.data['roleid'] == 2)
+                          Navigator.pushNamed(context, '/admin');
+                        else if (response.data['roleid'] == 3)
+                          Navigator.pushNamed(context, '/dashboard');
+                        else if (response.data['roleid'] == 1)
+                          Navigator.pushNamed(context, '/superadmin');
+                        else {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                            content:
+                                Text("Something went wrong please try again"),
+                          ));
+                        }
+                      } else {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                          content: Text("Invalid Credentials"),
+                        ));
+                      }
                     },
                   ),
                 ),

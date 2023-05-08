@@ -1,6 +1,9 @@
 //create a signin page login page but extra one confirm password field
 //create a signup page
 
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components/appbar.dart';
 import '../components/button_style.dart';
+import '../config/app_config.dart';
 import '../providers/responsive.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -95,6 +99,7 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
     double value = ResponsiveWidget.isSmallScreen(context) ? 10 : 50;
+    var config = AppConfig.of(context);
 
     return Scaffold(
       appBar: BaseAppBar(),
@@ -273,44 +278,57 @@ class _SignupScreenState extends State<SignupScreen> {
                               ),
                               actions: [
                                 TextButton(
-                                  child: Text('Submit'),
-                                  onPressed: () async {
-                                    // Get the verification code entered by the user
-                                    String verificationCode =
-                                        _verificationCodeController.text.trim();
-                                    SharedPreferences prefs =
-                                        await SharedPreferences.getInstance();
-                                    var verificationId =
-                                        prefs.getString('verificationId');
+                                    child: Text('Submit'),
+                                    onPressed: () async {
+                                      // Get the verification code entered by the user
+                                      String verificationCode =
+                                          _verificationCodeController.text
+                                              .trim();
+                                      SharedPreferences prefs =
+                                          await SharedPreferences.getInstance();
+                                      var verificationId =
+                                          prefs.getString('verificationId');
 
-                                    // Create a PhoneAuthCredential with the verification code
-                                    PhoneAuthCredential credential =
-                                        PhoneAuthProvider.credential(
-                                      verificationId: verificationId!,
-                                      smsCode: verificationCode,
-                                    );
+                                      // Create a PhoneAuthCredential with the verification code
+                                      PhoneAuthCredential credential =
+                                          await PhoneAuthProvider.credential(
+                                        verificationId: verificationId!,
+                                        smsCode: verificationCode,
+                                      );
 
-                                    // Sign in the user with the PhoneAuthCredential
-                                    try {
-                                      UserCredential userCredential =
-                                          await FirebaseAuth.instance
-                                              .signInWithCredential(credential);
                                       // Call your API to perform any necessary actions
-                                      // ...
+                                      FirebaseAuth.instance
+                                          .signInWithCredential(credential)
+                                          .then((value) async {
+                                        final data = jsonEncode({
+                                          'phoneNumber': email.text,
+                                          'password': password.text
+                                        });
 
-                                      // Close the dialog box and navigate to the home screen
-                                      Navigator.pop(context);
-                                      print("Authenticated");
-                                    } catch (e) {
-                                      // Display an error message if the verification code is invalid
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(SnackBar(
-                                        content: Text(
-                                            'Invalid verification code. Please try again.'),
-                                      ));
-                                    }
-                                  },
-                                ),
+                                        // Send POST request to the specified URL
+                                        final response = await Dio().post(
+                                          config!.apiBaseUrl +
+                                              'api/User/signup',
+                                          data: data,
+                                          options: Options(
+                                            headers: {
+                                              'Content-Type': 'application/json'
+                                            },
+                                          ),
+                                        );
+                                        // Close the dialog box and navigate to the home screen
+                                        Navigator.pop(context);
+                                        Navigator.pushNamed(context, '/login');
+                                      }).catchError((error) {
+                                        Navigator.pop(context);
+                                        // Display an error message if the verification code is invalid
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                          content: Text(
+                                              'Invalid verification code. Please try again.'),
+                                        ));
+                                      });
+                                    }),
                               ],
                             );
                           },
