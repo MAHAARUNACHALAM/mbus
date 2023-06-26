@@ -235,7 +235,8 @@ class _HomeState extends State<Home> {
                     context: context,
                     initialDate: DateTime.now(),
                     // firstDate is previous day
-                    firstDate: DateTime.now().subtract(const Duration(days: 1)),
+                    firstDate:
+                        DateTime.now().subtract(const Duration(days: 100)),
 
                     //DateTime.now() - not to allow to choose before today.
                     lastDate: DateTime(DateTime.now().year + 1),

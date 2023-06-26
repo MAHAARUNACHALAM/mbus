@@ -27,7 +27,7 @@ class _MyBookingScreenState extends State<MyBookingScreen> {
 
     try {
       final response = await _dio.get(
-          'http://192.168.37.49:5051/api/Bus/getBooking',
+          'http://192.168.1.8:5051/api/Bus/getBooking',
           queryParameters: {'Id': 580});
       print(response.data);
 

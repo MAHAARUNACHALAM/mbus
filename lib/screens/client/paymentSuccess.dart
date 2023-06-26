@@ -34,7 +34,7 @@ class PaymentSuccessPage extends StatelessWidget {
             ElevatedButton(
               style: buttonStyle,
               onPressed: () {
-                // Navigate to home screen
+                // Navigate to dashboard
                 Navigator.of(context).popUntil((route) => route.isFirst);
               },
               child: Text('Continue Booking'),
